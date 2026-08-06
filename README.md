@@ -260,7 +260,6 @@ Responsible for:
 - React
 - Vite
 - Tailwind CSS
-- Monaco Editor
 - Axios
 - Socket.IO Client
 
