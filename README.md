@@ -57,7 +57,6 @@ Whether users want to build a React application, edit an existing project, or in
 
 ### 💻 Browser-Based IDE
 
-- Monaco Editor
 - Syntax highlighting
 - File Explorer
 - Multiple file editing
