@@ -291,7 +291,7 @@ Responsible for:
 
 ## AI
 
-- OpenAI API / Anthropic API *(Configure your preferred provider)*
+- OpenAI API / Anthropic API / Mistral Ai *(Configure your preferred provider)*
 
 ---
 
