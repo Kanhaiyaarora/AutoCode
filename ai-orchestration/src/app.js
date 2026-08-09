@@ -11,7 +11,7 @@ app.get("/", (req, res) => {
   res.status(200).json({ message: "ai-orchestration api is healthy" });
 });
 
-app.get("/api/ai/healthz", (req, res) => {
+app.get("/api/status/healthz", (req, res) => {
   res.status(200).json({ status: "ok" });
 });
 
