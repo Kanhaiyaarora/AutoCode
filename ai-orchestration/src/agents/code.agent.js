@@ -13,12 +13,4 @@ const agent = createAgent({
   tools: [listFiles, updateFiles, deleteFiles, readFiles],
 });
 
-await agent.invoke({
-  messages: [
-    {
-      role: "user",
-      content:
-        "",
-    },
-  ],
-});
+export default agent;
