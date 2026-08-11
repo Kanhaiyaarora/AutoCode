@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import fs from "fs";
 import path from "path";
+import cors from "cors";
 
 const WORKING_DIR = "/workspace";
 
@@ -10,6 +11,7 @@ const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({ methods: ["GET", "POST", "PATCH", "DELETE"], origin: "*" }));
 
 app.get("/", (req, res) => {
   res
@@ -209,7 +211,7 @@ app.delete("/delete-files", async (req, res) => {
 
         return { [file]: `Error deleting file: ${error.message}` };
       }
-    })
+    }),
   );
 
   res.status(200).json({
