@@ -3,20 +3,63 @@ import morgan from "morgan";
 import fs from "fs";
 import path from "path";
 import cors from "cors";
+import { Server } from "socket.io";
+import http, { createServer } from "http";
+import pty from "node-pty";
+import os from "os";
 
 const WORKING_DIR = "/workspace";
 
 const app = express();
+const httpServer = http.createServer(app);
 
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ methods: ["GET", "POST", "PATCH", "DELETE"], origin: "*" }));
 
+const io = new Server(httpServer, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+  },
+});
+
 app.get("/", (req, res) => {
   res
     .status(200)
     .json({ message: "Hello from the Sandbox Agent!", status: "success" });
+});
+
+const shell = process.env.SHELL || "bash";
+
+// spawn the pty process
+const ptyProcess = pty.spawn(shell, [], {
+  name: "xterm-color",
+  cols: 80,
+  rows: 30,
+  cwd: "/workspace",
+  env: process.env,
+});
+
+ptyProcess.onData((data) => {
+  io.emit("terminal-output", data);
+});
+
+ptyProcess.onExit(({ exitCode, signal }) => {
+  console.log(`PTY process exited with code: ${exitCode}, signal: ${signal}`);
+});
+
+io.on("connection", (socket) => {
+  console.log("Client connected: " + socket.id);
+
+  socket.on("terminal-input", (data) => {
+    ptyProcess.write(data);
+  });
+
+  socket.on("disconnected", () => {
+    console.log("Client disconnected: " + socket.id);
+  });
 });
 
 /**
@@ -220,4 +263,4 @@ app.delete("/delete-files", async (req, res) => {
   });
 });
 
-export default app;
+export default httpServer;
