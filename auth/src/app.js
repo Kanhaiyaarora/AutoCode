@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import cookies from "cookie-parser";
+import authRoutes from "./routes/auth.routes.js";
 
 const app = express();
 
@@ -26,12 +27,6 @@ passport.use(
   ),
 );
 
-
-
-
-
-
-
-
+app.use("/api/auth", authRoutes);
 
 export default app;
