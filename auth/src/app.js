@@ -27,6 +27,14 @@ passport.use(
   ),
 );
 
+app.get("/api/status/healthz", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
+app.get("/api/status/readyz", (req, res) => {
+  res.status(200).json({ status: "ready" });
+});
+
 app.use("/api/auth", authRoutes);
 
 export default app;
