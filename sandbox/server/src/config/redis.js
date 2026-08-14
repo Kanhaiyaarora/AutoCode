@@ -4,6 +4,14 @@ import { deletePod } from "../kubernetes/pod.js";
 
 const redis = new Redis(process.env.REDIS_URI);
 
+redis.on("connect", () => {
+  console.log(`Sandbox-Server Service connected to Redis Successfully`);
+});
+
+redis.on("error", (err) => {
+  console.log(`Sandbox-Server Service Redis connection error --> `, err);
+});
+
 const subscriber = new Redis(process.env.REDIS_URI);
 
 export async function createSandboxKey(sandboxId) {
