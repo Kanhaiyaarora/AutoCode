@@ -20,10 +20,10 @@ router.get(
 
       await sendAuthNotification({
         userId: user._id,
-        action: 'google_login',
-        timestamp: new Date();
-        email: emails[0].value
-      })
+        action: "google_login",
+        timestamp: new Date(),
+        email: emails[0].value,
+      });
 
       if (!user) {
         user = new User({

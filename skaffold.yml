@@ -22,6 +22,14 @@ build:
         infer:
           - "src/**"
 
+    - image: notification
+      context: notification
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        infer:
+          - "src/**"
+
     - image: agent
       context: sandbox/agent
       docker:
