@@ -2,7 +2,7 @@ import Redis from "ioredis";
 import { deleteService } from "../kubernetes/service.js";
 import { deletePod } from "../kubernetes/pod.js";
 
-const redis = new Redis(process.env.REDIS_URI);
+const redis = new Redis(process.env.REDIS_URL);
 
 redis.on("connect", () => {
   console.log(`Sandbox-Server Service connected to Redis Successfully`);
@@ -12,7 +12,7 @@ redis.on("error", (err) => {
   console.log(`Sandbox-Server Service Redis connection error --> `, err);
 });
 
-const subscriber = new Redis(process.env.REDIS_URI);
+const subscriber = new Redis(process.env.REDIS_URL);
 
 export async function createSandboxKey(sandboxId) {
   await redis.set(

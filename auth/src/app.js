@@ -10,7 +10,7 @@ import authRoutes from "./routes/auth.routes.js";
 const app = express();
 
 // Middleware
-app.use(morgan(dev));
+app.use(morgan("dev"));
 app.use(cookies());
 app.use(passport.initialize());
 
